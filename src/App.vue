@@ -1,8 +1,8 @@
 <template>
-  <div id="app" class="p-1 mb-3">
-    <div id="nav">
+  <div id="app" class="">
+    <div id="nav" v-if="false">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/live">Live</router-link>
     </div>
     <router-view/>
   </div>
