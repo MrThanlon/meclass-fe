@@ -22,10 +22,10 @@
       <div>
         <div class="input-group">
           <input class="form-control"
-                 style="border-radius: 2rem 0 0 2rem">
+                 style="border-radius: 2rem">
           <div class="input-group-append">
             <button class="input-group-text"
-                  style="border-radius: 0 2rem 2rem 0;background: #f1da32">
+                  style="border-radius: 2rem;background: #f1da32;position: relative;right: 2rem">
               <i class="fas fa-search"></i>
             </button>
           </div>
