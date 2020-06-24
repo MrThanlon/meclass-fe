@@ -40,7 +40,7 @@
              style="width: 40px;height: 40px">
           <i class="fas fa-user" style="font-size: 30px"></i>
         </div>
-        <span>用户名</span>
+        <span>{{username||'登录'}}</span>
       </div>
     </header>
     <main class="d-flex justify-content-between">
@@ -150,7 +150,14 @@
 <script>
 // 首页
 export default {
-  name: 'Home'
+  name: 'Home',
+  data () {
+    return {
+      username: ''
+    }
+  },
+  async mounted () {
+  }
 }
 </script>
 
