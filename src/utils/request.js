@@ -21,7 +21,12 @@ export default function request (url, method, data = null) {
     xhr.onload = function () {
       if (xhr.status === 200) {
         if (xhr.getResponseHeader('Content-Type') === 'application/json') {
-          resolve(JSON.parse(xhr.response))
+          const res = JSON.parse(xhr.response)
+          if (res.code === 1) {
+            resolve(res.result)
+          } else {
+            reject(res)
+          }
         } else {
           resolve(xhr.response)
         }

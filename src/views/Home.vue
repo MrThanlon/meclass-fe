@@ -148,6 +148,7 @@
 </template>
 
 <script>
+import api from '../utils/api'
 // 首页
 export default {
   name: 'Home',
@@ -157,6 +158,7 @@ export default {
     }
   },
   async mounted () {
+    this.username = (await api.user.get()).uname
   }
 }
 </script>
