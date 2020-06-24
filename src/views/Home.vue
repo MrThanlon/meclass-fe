@@ -35,13 +35,14 @@
         <span class="m-1">分享</span>
         <span class="m-1">主题</span>
       </div>
-      <div class="d-flex flex-nowrap align-items-center">
-        <div class="border d-flex justify-content-center align-items-center m-1"
+      <div class="d-flex flex-nowrap align-items-center mr-2">
+        <div v-if="logged"
+             class="border d-flex justify-content-center align-items-center m-1"
              style="width: 40px;height: 40px">
           <i class="fas fa-user" style="font-size: 30px"></i>
         </div>
         <span v-if="logged">{{username}}</span>
-        <span v-else @click="$router.push('/login')">登录</span>
+        <router-link v-else to="/login">登录</router-link>
       </div>
     </header>
     <main class="d-flex justify-content-between">
