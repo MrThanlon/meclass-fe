@@ -19,6 +19,10 @@ const routes = [
     component: () => import('../views/Teacher')
   },
   {
+    path: '/login',
+    name: 'login'
+  },
+  {
     path: '*',
     name: '404',
     component: () => import('../views/Test')

@@ -40,7 +40,8 @@
              style="width: 40px;height: 40px">
           <i class="fas fa-user" style="font-size: 30px"></i>
         </div>
-        <span>{{username||'登录'}}</span>
+        <span v-if="logged">{{username}}</span>
+        <span v-else @click="$router.push('/login')">登录</span>
       </div>
     </header>
     <main class="d-flex justify-content-between">
@@ -154,11 +155,13 @@ export default {
   name: 'Home',
   data () {
     return {
+      logged: false,
       username: ''
     }
   },
   async mounted () {
     this.username = (await api.user.get()).uname
+    this.logged = true
   }
 }
 </script>
