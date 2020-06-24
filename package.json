@@ -11,7 +11,7 @@
     "@fortawesome/fontawesome-free": "^5.13.0",
     "bootstrap": "^4.5.0",
     "core-js": "^3.6.5",
-    "jquery": "^1.12.4",
+    "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
     "recordrtc": "^5.6.1",
     "vue": "^2.6.11",
