@@ -161,8 +161,12 @@ export default {
     }
   },
   async mounted () {
-    this.username = (await api.user.get()).uname
-    this.logged = true
+    try {
+      this.username = (await api.user.get()).uname
+      this.logged = true
+    } catch (e) {
+      console.debug(e)
+    }
   }
 }
 </script>
