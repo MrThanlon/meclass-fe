@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import api from '../utils/api'
 export default {
   name: 'Login',
   data () {
@@ -21,16 +22,20 @@ export default {
     }
   },
   methods: {
-    loginAct: function () {
+    async loginAct () {
       if (this.loginForm.username === '') {
-        alert('请输入用户名！')
-      } else {
-        if (this.loginForm.password === '') {
-          alert('请输入密码！')
-        } else {
-          
-        }
+        this.$emit('alert', '请输入用户名！')
+        return
       }
+      if (this.loginForm.password === '') {
+        this.$emit('alert', '请输入密码！')
+        return
+      }
+      await api.user.login({
+        uname: this.loginForm.username,
+        pwd: this.loginForm.password,
+        flag: 0
+      })
     }
   }
 }
