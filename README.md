@@ -1,5 +1,5 @@
 # meclass-fe
-
+![CI](https://github.com/MrThanlon/meclass-fe/workflows/CI/badge.svg)
 ## Project setup
 ```
 npm install
