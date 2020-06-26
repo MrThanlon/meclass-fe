@@ -42,5 +42,5 @@ jobs:
     - name: Trig Updated
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: curl -d '{"event_type":"updated"}' -H 'Content-Type: application/json' -H 'Authorization: token $GITHUB_TOKEN' https://api.github.com/repos/MrThanlon/meclass/dispatches
+      run: "curl -d \"{\"event_type\":\"updated\"}\" -H \"Content-Type: application/json\" -H \"Authorization: token $GITHUB_TOKEN\" https://api.github.com/repos/MrThanlon/meclass/dispatches"
       
