@@ -37,4 +37,8 @@ jobs:
         target_branch: gh-pages
         build_dir: dist
       env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Trig Updated
+      run: curl -d '{"event_type":"updated"}' -H "Content-Type: application/json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/MrThanlon/meclass/dispatches
+      
