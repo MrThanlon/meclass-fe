@@ -38,9 +38,15 @@ jobs:
         build_dir: dist
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Trig Updated
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: "curl -d \"{\"event_type\":\"updated\"}\" -H \"Content-Type: application/json\" -H \"Authorization: token $GITHUB_TOKEN\" https://api.github.com/repos/MrThanlon/meclass/dispatches"
-      
+    
+    - name: Dispatch Action
+      uses: mvasigh/dispatch-action@1.1.6
+      with:
+        # The Github access token to use (i.e. secrets.GITHUB_TOKEN)
+        token: ${{ secrets.GITHUB_TOKEN }}
+        # The name of the repository to dispatch the event to
+        repo: meclass
+        # The owner of the repository to dispatch the event to
+        owner: MrThanlon
+        # The type of event to be dispatched
+        event_type: updated
