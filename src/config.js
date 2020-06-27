@@ -1,4 +1,4 @@
 export default {
-  baseURL: '/',
+  baseURL: '',
   CORS: false
 }
