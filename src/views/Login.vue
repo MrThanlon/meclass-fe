@@ -1,9 +1,9 @@
 <template>
-  <div class="t">
+  <div>
     <div class="S-T" v-if="page==0">
-      <button class="student" v-on:click="page=1">我是学生</button>
-      <button class="teacher" v-on:click="page=2">我是老师</button>
-      <button class="back">返回上页</button>
+      <button class="student" v-on:click="page=1">我 是<br>学 生</button>
+      <button class="teacher" v-on:click="page=2">我 是<br>老 师</button>
+      <button class="back" v-on:click="goback()">返回上页</button>
     </div>
 
     <div class="login-div" v-if="page==1">
@@ -12,7 +12,7 @@
       <input class="login-text" type="text" placeholder="用 户 名" v-model="loginForm.username">
       <br>
       <input class="login-text" type="password" placeholder="密 码" v-model="loginForm.password">
-      <button class="login-btn" @click="loginAct">登 录</button>
+      <button class="login-btn" @click="loginAct(0)">登 录</button>
       <a class="sign" v-on:click="page=11">注 册 用 户</a>
       <a class="comback" v-on:click="page=0">返 回 上 页</a>
     </div>
@@ -23,7 +23,7 @@
       <input class="login-text" type="text" placeholder="用 户 名" v-model="loginForm.username">
       <br>
       <input class="login-text" type="password" placeholder="密 码" v-model="loginForm.password">
-      <button class="login-btn" @click="loginAct">登 录</button>
+      <button class="login-btn" @click="loginAct(1)">登 录</button>
       <a class="sign" v-on:click="page=22">注 册 教 师</a>
       <a class="comback" v-on:click="page=0">返 回 上 页</a>
     </div>
@@ -31,12 +31,12 @@
     <div class="login-div" v-if="page==11">
       <h1>用 户 注 册</h1>
       <br>
-      <input class="login-text" type="text" placeholder="用 户 名" v-model="signupForm.username">
+      <input class="login-text" type="text" placeholder="用 户 名" v-model="registerForm.username">
       <br>
-      <input class="login-text" type="password" placeholder="密 码" v-model="signupForm.password">
+      <input class="login-text" type="password" placeholder="密 码" v-model="registerForm.password">
       <br>
-      <input class="login-text" type="password" placeholder="确 认 密 码" v-model="signupForm.confirm">
-      <button class="login-btn" @click="signupAct">注 册</button>
+      <input class="login-text" type="password" placeholder="确 认 密 码" v-model="registerForm.confirm">
+      <button class="login-btn" @click="registerAct(0)">注 册</button>
       <a class="sign" v-on:click="page=1">前 去 登 录</a>
       <a class="comback" v-on:click="page=0">返 回 上 页</a>
     </div>
@@ -44,12 +44,12 @@
     <div class="login-div" v-if="page==22">
       <h1>教 师 注 册</h1>
       <br>
-      <input class="login-text" type="text" placeholder="用 户 名" v-model="signupForm.username">
+      <input class="login-text" type="text" placeholder="用 户 名" v-model="registerForm.username">
       <br>
-      <input class="login-text" type="password" placeholder="密 码" v-model="signupForm.password">
+      <input class="login-text" type="password" placeholder="密 码" v-model="registerForm.password">
       <br>
-      <input class="login-text" type="password" placeholder="确 认 密 码" v-model="signupForm.confirm">
-      <button class="login-btn" @click="signupAct">注 册</button>
+      <input class="login-text" type="password" placeholder="确 认 密 码" v-model="registerForm.confirm">
+      <button class="login-btn" @click="registerAct(1)">注 册</button>
       <a class="sign" v-on:click="page=2">前 去 登 录</a>
       <a class="comback" v-on:click="page=0">返 回 上 页</a>
     </div>
@@ -58,16 +58,19 @@
 
 <script>
 import api from '../utils/api'
+import axios from 'axios'
 export default {
   name: 'Login',
   data () {
     return {
       page: 0,
+      code: '0',
+      msg: '请求失败',
       loginForm: {
         username: '',
         password: ''
       },
-      signupForm: {
+      registerForm: {
         username: '',
         password: '',
         confirm: ''
@@ -75,7 +78,10 @@ export default {
     }
   },
   methods: {
-    async loginAct () {
+    goback () {
+      this.$router.go(-1)
+    },
+    async loginAct (flag) {
       if (this.loginForm.username === '') {
         this.$emit('alert', '请输入用户名！')
         return
@@ -87,42 +93,59 @@ export default {
       await api.user.login({
         uname: this.loginForm.username,
         pwd: this.loginForm.password,
-        flag: 0,
-        // 返回身份，若为1则为学生登录，若为2则为教师登录
-        identity: this.page
+        flag
       })
+      axios.get('api.user.login').then(res => {
+        this.msg = res.msg
+        this.code = res.code
+      })
+      if (this.code === 0) {
+        // 登录失败
+        this.$emit('alert', this.msg)
+      } else {
+        this.$router.push('/?username=' + this.loginForm.username)
+      }
     },
-    async signupAct () {
-      if (this.signupForm.username === '') {
+    async registerAct (flag) {
+      if (this.registerForm.username === '') {
         this.$emit('alert', '请输入用户名！')
         return
       }
-      if (this.signupForm.password === '') {
+      if (this.registerForm.password === '') {
         this.$emit('alert', '请输入密码！')
         return
       }
-      if (this.signupForm.password !== this.signupForm.confirm) {
+      if (this.registerForm.password !== this.registerForm.confirm) {
         this.$emit('alert', '两次密码输入不一致！')
         return
       }
-      await api.user.signup({
-        uname: this.signupForm.username,
-        pwd: this.signupForm.password,
-        flag: 0,
-        // 返回身份，若为11则为学生注册，若为2则为教师注册
-        identity: this.page
+      await api.user.register({
+        uname: this.registerForm.username,
+        pwd: this.registerForm.password,
+        flag
       })
+      axios.get('api.user.register').then(res => {
+        this.msg = res.msg
+        this.code = res.code
+      })
+      if (this.code === 0) {
+        // 登录失败
+        this.$emit('alert', this.msg)
+      } else {
+        // 这里应该是一个绿色的alert？
+        alert('注册成功！跳转至登录界面...')
+        if (flag === 0) {
+          this.page = 1
+        } else {
+          this.page = 2
+        }
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-body{
-  margin: 0;
-  padding: 0;
-  background:  #faf8e9;
-}
 .login-div{
   width: 300px;
   padding: 20px;
@@ -194,11 +217,6 @@ input::-webkit-input-placeholder{
   bottom: 10%;
   right: 10%;
 }
-body{
-  margin: 0;
-  padding: 0;
-  background:  #faf8e9;
-}
 .student{
   width: 400px;
   height: 400px;
@@ -210,6 +228,8 @@ body{
   transform: translate(-50%,-50%);
   border-radius: 30px ;
   border: none;
+  color: rgb(92, 87, 78);
+  font-size: 100px;
 }
 .teacher{
   width: 400px;
@@ -222,16 +242,23 @@ body{
   transform: translate(-50%,-50%);
   border-radius: 30px ;
   border: none;
+  color: rgb(92, 87, 78);
+  font-size: 100px;
+
 }
 .student:hover{
-    background-color: #d3a304 ;
-    opacity: 0.9;
-    cursor: pointer;
+  background-color: #d3a304 ;
+  opacity: 0.9;
+  cursor: pointer;
+  background-image: url("../assets/student.jpg");
+  font-size: 0px;
 }
 .teacher:hover{
-    background-color: #d6b031 ;
-    opacity: 0.9;
-    cursor: pointer;
+  background-color: #d6b031 ;
+  opacity: 0.9;
+  cursor: pointer;
+  background-image: url("../assets/teacher.jpg");
+  font-size: 0px;
 }
 .back{
   width: 300px;
