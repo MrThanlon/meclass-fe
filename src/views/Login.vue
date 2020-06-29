@@ -58,7 +58,6 @@
 
 <script>
 import api from '../utils/api'
-import axios from 'axios'
 export default {
   name: 'Login',
   data () {
@@ -90,15 +89,14 @@ export default {
         this.$emit('alert', '请输入密码！')
         return
       }
-      await api.user.login({
+      const res = await api.user.login({
         uname: this.loginForm.username,
         pwd: this.loginForm.password,
         flag
       })
-      axios.get('api.user.login').then(res => {
-        this.msg = res.msg
-        this.code = res.code
-      })
+      this.msg = res.msg
+      this.code = res.code
+
       if (this.code === 0) {
         // 登录失败
         this.$emit('alert', this.msg)
@@ -119,21 +117,18 @@ export default {
         this.$emit('alert', '两次密码输入不一致！')
         return
       }
-      await api.user.register({
+      const res = await api.user.register({
         uname: this.registerForm.username,
         pwd: this.registerForm.password,
         flag
       })
-      axios.get('api.user.register').then(res => {
-        this.msg = res.msg
-        this.code = res.code
-      })
+      this.msg = res.msg
+      this.code = res.code
       if (this.code === 0) {
         // 登录失败
         this.$emit('alert', this.msg)
       } else {
-        // 这里应该是一个绿色的alert？
-        alert('注册成功！跳转至登录界面...')
+        this.$emit('alert', { type: 'success', text: '注册成功！跳转至登录界面...' })
         if (flag === 0) {
           this.page = 1
         } else {
