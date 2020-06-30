@@ -6,6 +6,7 @@ import store from './store'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.css'
+import 'video.js/dist/video-js.css'
 
 Vue.config.productionTip = false
 
