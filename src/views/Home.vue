@@ -1,9 +1,9 @@
 <template>
-  <div class="home">
+  <div class="home" style="min-width: 720px">
     <header class="d-flex align-items-center
       justify-content-between flex-nowrap
       border m-1 pl-2 pr-2 shadow-sm"
-            style="min-width: 720px;height: 4rem">
+            style="height: 4rem">
       <div class="d-flex align-items-center">
         <img src="../assets/logo.jpg" class="m-1"
              style="width: 2rem;height: 2rem">
@@ -106,41 +106,17 @@
     <footer>
       <span class="m-1" style="font-size: 1.5rem">热门课程</span>
       <div class="d-flex flex-wrap">
-        <div class="card rounded-0 m-1" style="max-width: 150px;border-color: #f1da32">
+        <div class="card rounded-0 m-1"
+             style="max-width: 150px;border-color: #f1da32;cursor: pointer"
+             v-for="(item, idx) in videoList"
+             :key="idx"
+             @click="$router.push(`/video?title=${item.videoTitle}`)">
           <img class="card-img-top rounded-0 p-1"
                src="../assets/logo.jpg">
           <div class="card-body p-1">
-            <h6 class="card-title">课程名称</h6>
+            <h6 class="card-title">{{item.videoTitle}}</h6>
             <p class="card-text">
-              课时&nbsp;开课机构
-              <br />
-              价格&nbsp;报名人数
-            </p>
-          </div>
-        </div>
-
-        <div class="card rounded-0 m-1" style="max-width: 150px;border-color: #f1da32">
-          <img class="card-img-top rounded-0 p-1"
-               src="../assets/logo.jpg">
-          <div class="card-body p-1">
-            <h6 class="card-title">课程名称</h6>
-            <p class="card-text">
-              课时&nbsp;开课机构
-              <br />
-              价格&nbsp;报名人数
-            </p>
-          </div>
-        </div>
-
-        <div class="card rounded-0 m-1" style="max-width: 150px;border-color: #f1da32">
-          <img class="card-img-top rounded-0 p-1"
-               src="../assets/logo.jpg">
-          <div class="card-body p-1">
-            <h6 class="card-title">课程名称</h6>
-            <p class="card-text">
-              课时&nbsp;开课机构
-              <br />
-              价格&nbsp;报名人数
+              播放量：<span>{{item.playCount}}</span>
             </p>
           </div>
         </div>
@@ -157,11 +133,13 @@ export default {
   data () {
     return {
       logged: false,
-      username: ''
+      username: '',
+      videoList: []
     }
   },
   async mounted () {
     try {
+      this.videoList = (await api.video.findVideoAll()).data
       this.username = await api.user.get()
       this.logged = true
     } catch (e) {

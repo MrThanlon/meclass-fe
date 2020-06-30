@@ -31,7 +31,7 @@ const routes = [
   {
     path: '*',
     name: '404',
-    component: () => import('../views/Test')
+    component: () => import('../views/404')
   }
 ]
 
