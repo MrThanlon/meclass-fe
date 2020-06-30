@@ -29,6 +29,7 @@ export default {
   },
   methods: {
     trigAlert (event) {
+      console.debug(event)
       if (typeof event === 'string') {
         // only text
         event = { text: event }

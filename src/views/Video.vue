@@ -15,7 +15,7 @@ export default {
         controls: true,
         sources: [
           {
-            src: '/video/get?videoTitle=testvideo',
+            src: '/meclass-0.0.1-SNAPSHOT/video/get?videoTitle=testvideo',
             type: 'video/mp4'
           }
         ]

@@ -22,13 +22,13 @@ export default function request (url, method, data = null) {
       if (xhr.status === 200) {
         if (xhr.getResponseHeader('Content-Type') === 'application/json') {
           const res = JSON.parse(xhr.response)
-          if (res.code === 1) {
-            resolve(res.result)
+          if (res.code === 0) {
+            resolve(res)
           } else {
             reject(res)
           }
         } else {
-          resolve(xhr.response)
+          reject(xhr.response)
         }
       } else {
         reject(xhr.responseText)

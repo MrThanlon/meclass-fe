@@ -97,7 +97,7 @@ export default {
       this.msg = res.msg
       this.code = res.code
 
-      if (this.code === 0) {
+      if (this.code === 1) {
         // 登录失败
         this.$emit('alert', this.msg)
       } else {
@@ -124,7 +124,7 @@ export default {
       })
       this.msg = res.msg
       this.code = res.code
-      if (this.code === 0) {
+      if (this.code === 1) {
         // 登录失败
         this.$emit('alert', this.msg)
       } else {

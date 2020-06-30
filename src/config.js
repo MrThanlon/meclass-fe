@@ -1,4 +1,4 @@
 export default {
-  baseURL: '',
+  baseURL: '/meclass-0.0.1-SNAPSHOT',
   CORS: false
 }
