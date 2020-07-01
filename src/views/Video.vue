@@ -77,7 +77,7 @@ export default {
         controls: true,
         sources: [
           {
-            src: 'http://localhost/ziyihuang/Movies/testvideo.mp4',
+            src: `/meclass-0.0.1-SNAPSHOT/video/get?videoTitle=${this.title}`,
             type: 'video/mp4'
           }
         ]
