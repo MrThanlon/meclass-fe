@@ -2,7 +2,8 @@
   <div class="d-flex pt-0 pt-md-3 flex-wrap p-0 p-md-2">
     <div class="d-flex flex-wrap w-100">
       <div class="d-flex justify-content-center col-12 col-md-8 p-0 mb-2">
-        <video-player :options="options" class="player">
+        <video-player :options="options"
+                      class="player">
         </video-player>
       </div>
       <div class="d-flex flex-wrap col-12 col-md-4">
@@ -23,14 +24,26 @@
             <span>收藏</span>
           </button>
         </div>
-        <div class="mb-3">
+        <div class="d-flex w-100 flex-wrap mb-3">
+          <h4 class="w-100">留言</h4>
+          <form @submit="submitMessage">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="...">
+              <div class="input-group-append">
+                <button class="btn btn-outline-dark" type="submit">提交</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="">
           <h4>其他视频</h4>
-          <div>
+          <div class="d-flex flex-wrap border rounded p-1"
+               style="overflow-y: scroll; height: 300px">
             <div class="card rounded-0 m-1"
                  style="max-width: 150px;border-color: #f1da32;cursor: pointer"
                  v-for="(item, idx) in videoList"
                  :key="idx"
-                 @click="$router.push(`/video?title=${item.videoTitle}`)">
+                 @click="toAnotherVideo(item.videoTitle)">
               <img class="card-img-top rounded-0 p-1"
                    src="../assets/logo.jpg">
               <div class="card-body p-1">
@@ -41,17 +54,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="d-flex w-100 flex-wrap">
-          <h4 class="w-100">留言</h4>
-          <form @submit="submitMessage">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="...">
-              <div class="input-group-append">
-                <button class="btn btn-outline-dark" type="submit">提交</button>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </div>
@@ -64,11 +66,17 @@ import videoPlayer from '../components/videoPlayer'
 
 export default {
   name: 'Video',
+  props: {
+    title: String
+  },
   data () {
     return {
-      title: this.$route.query.title,
       videoList: []
     }
+  },
+  beforeRouteUpdate (to, from, next) {
+    next()
+    location.reload()
   },
   computed: {
     options () {
@@ -87,12 +95,16 @@ export default {
   methods: {
     async submitMessage () {
       return false
+    },
+    async toAnotherVideo (title) {
+      await this.$router.push(`/video/${title}`)
     }
   },
   async mounted () {
     if (!this.title) {
       await this.$router.push({ name: '404' })
     }
+    this.videoUpdate = true
     this.videoList = (await api.video.findVideoAll()).data
   },
   components: {

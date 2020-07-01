@@ -20,7 +20,7 @@ const handler = {
   apply (target, thisArg, argumentList) {
     const u = conf.baseURL + target._url
     target._url = ''
-    return request(u, 'post', argumentList[0])
+    return request(u, 'post', argumentList[0], argumentList[1])
   }
 }
 

@@ -11,7 +11,7 @@ import conf from '../config'
  * @param data {Object}
  * @return {Promise}
  */
-export default function request (url, method, data = null) {
+export default function request (url, method, data = null, uploadProgressCallback = null) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest()
     xhr.open(method, url)
@@ -36,6 +36,9 @@ export default function request (url, method, data = null) {
     }
     xhr.onerror = xhr.onabort = function () {
       reject(xhr.responseText)
+    }
+    if (uploadProgressCallback) {
+      xhr.upload.onprogress = uploadProgressCallback
     }
     if (data instanceof FormData) {
       xhr.send(data)

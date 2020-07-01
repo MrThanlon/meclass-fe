@@ -110,7 +110,7 @@
              style="max-width: 150px;border-color: #f1da32;cursor: pointer"
              v-for="(item, idx) in videoList"
              :key="idx"
-             @click="$router.push(`/video?title=${item.videoTitle}`)">
+             @click="$router.push(`/video/${item.videoTitle}`)">
           <img class="card-img-top rounded-0 p-1"
                src="../assets/logo.jpg">
           <div class="card-body p-1">
