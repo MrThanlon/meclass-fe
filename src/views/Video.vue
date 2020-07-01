@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex pt-0 pt-md-3 flex-wrap p-0 p-md-2">
-    <div class="d-flex flex-wrap w-100">
+    <div class="d-flex flex-wrap w-100 mb-3">
       <div class="d-flex justify-content-center col-12 col-md-8 p-0 mb-2">
         <video-player :options="options"
                       class="player">
@@ -24,20 +24,9 @@
             <span>收藏</span>
           </button>
         </div>
-        <div class="d-flex w-100 flex-wrap mb-3">
-          <h4 class="w-100">留言</h4>
-          <form @submit="submitMessage">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="...">
-              <div class="input-group-append">
-                <button class="btn btn-outline-dark" type="submit">提交</button>
-              </div>
-            </div>
-          </form>
-        </div>
         <div class="">
           <h4>其他视频</h4>
-          <div class="d-flex flex-wrap border rounded p-1"
+          <div class="d-flex flex-wrap border justify-content-around rounded p-1"
                style="overflow-y: scroll; height: 300px">
             <div class="card rounded-0 m-1"
                  style="max-width: 150px;border-color: #f1da32;cursor: pointer"
@@ -56,6 +45,19 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-flex w-100 flex-wrap justify-content-center justify-content-md-start mb-3">
+      <form @submit="submitMessage">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">留言</span>
+          </div>
+          <input type="text" class="form-control" placeholder="...">
+          <div class="input-group-append">
+            <button class="btn btn-outline-dark" type="submit">提交</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>
