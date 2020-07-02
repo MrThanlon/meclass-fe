@@ -37,11 +37,12 @@
       </div>
       <div class="d-flex flex-nowrap align-items-center mr-2">
         <div v-if="logged"
-             class="border d-flex justify-content-center align-items-center m-1"
+             @click="$router.push('/user')"
+             class="border d-flex justify-content-center align-items-center m-1 pointer"
              style="width: 40px;height: 40px">
           <i class="fas fa-user" style="font-size: 30px"></i>
         </div>
-        <span v-if="logged">{{username}}</span>
+        <span v-if="logged" @click="$router.push('/user')" class="pointer">{{username}}</span>
         <router-link v-else to="/login">登录</router-link>
       </div>
     </header>
@@ -140,7 +141,7 @@ export default {
   async mounted () {
     try {
       this.videoList = (await api.video.findVideoAll()).data
-      this.username = await api.user.get()
+      this.username = (await api.user.get()).data.uname
       this.logged = true
     } catch (e) {
       console.debug(e)

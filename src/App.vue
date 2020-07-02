@@ -42,4 +42,7 @@ export default {
 </script>
 
 <style>
+  .pointer {
+    cursor: pointer;
+  }
 </style>

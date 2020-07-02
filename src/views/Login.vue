@@ -101,7 +101,7 @@ export default {
         // 登录失败
         this.$emit('alert', this.msg)
       } else {
-        this.$router.push('/?username=' + this.loginForm.username)
+        await this.$router.push('/')
       }
     },
     async registerAct (flag) {

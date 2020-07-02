@@ -35,9 +35,9 @@ const routes = [
     props: true
   },
   {
-    path: '/upload',
-    name: 'upload',
-    component: () => import('../views/Upload')
+    path: '/user',
+    name: 'user',
+    component: () => import('../views/User')
   },
   {
     path: '*',
