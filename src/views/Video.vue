@@ -101,14 +101,13 @@ export default {
     }
     this.videoUpdate = true
     this.videoList = (await api.video.findVideoAll()).data
-    console.debug(JSON.stringify(this.videoList))
     const gitalk = new Gitalk({
       clientID: '202160413cdce481616c',
       clientSecret: 'e130aae731e921136ab262dad1f90fe13a2dfa46',
       repo: 'meclass-comment',
       owner: 'MrThanlon',
       admin: ['MrThanlon'],
-      id: location.toLocaleString(), // Ensure uniqueness and length less than 50
+      id: `video/${this.videoId}`, // Ensure uniqueness and length less than 50
       distractionFreeMode: false, // Facebook-like distraction free mode
       language: 'zh-CN'
     })
