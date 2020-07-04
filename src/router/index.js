@@ -29,7 +29,7 @@ const routes = [
     component: () => import('../views/Login')
   },
   {
-    path: '/video/:title',
+    path: '/video/:videoId',
     name: 'video',
     component: () => import('../views/Video'),
     props: true

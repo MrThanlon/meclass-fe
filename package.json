@@ -11,6 +11,7 @@
     "@fortawesome/fontawesome-free": "^5.13.0",
     "bootstrap": "^4.5.0",
     "core-js": "^3.6.5",
+    "gitalk": "^1.6.2",
     "jquery": "^1.12.4",
     "popper.js": "^1.16.1",
     "recordrtc": "^5.6.1",

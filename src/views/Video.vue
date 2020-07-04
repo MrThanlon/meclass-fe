@@ -32,7 +32,7 @@
                  style="max-width: 150px;border-color: #f1da32;cursor: pointer"
                  v-for="(item, idx) in videoList"
                  :key="idx"
-                 @click="toAnotherVideo(item.videoTitle)">
+                 @click="toAnotherVideo(item.videoId)">
               <img class="card-img-top rounded-0 p-1"
                    src="../assets/logo.jpg">
               <div class="card-body p-1">
@@ -46,30 +46,19 @@
         </div>
       </div>
     </div>
-    <div class="d-flex w-100 flex-wrap justify-content-center justify-content-md-start mb-3">
-      <form @submit="submitMessage">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">留言</span>
-          </div>
-          <input type="text" class="form-control" placeholder="...">
-          <div class="input-group-append">
-            <button class="btn btn-outline-dark" type="submit">提交</button>
-          </div>
-        </div>
-      </form>
-    </div>
+    <div id="gitalk-container" class="w-100 pl-1 pr-1 pl-md-4 pr-md-4"></div>
   </div>
 </template>
 
 <script>
 import api from '../utils/api'
 import videoPlayer from '../components/videoPlayer'
+import Gitalk from 'gitalk'
 
 export default {
   name: 'Video',
   props: {
-    title: String
+    videoId: String
   },
   data () {
     return {
@@ -87,27 +76,41 @@ export default {
         controls: true,
         sources: [
           {
-            src: `/meclass-0.0.1-SNAPSHOT/video/get?videoTitle=${this.title}`,
+            src: `/meclass-0.0.1-SNAPSHOT/video/get?videoId=${this.videoId}`,
             type: 'video/mp4'
           }
         ]
       }
+    },
+    title () {
+      return this.videoList.reduce((pre, cur) => pre || cur.videoId + '' === this.videoId ? cur.videoTitle : pre, null)
     }
   },
   methods: {
     async submitMessage () {
       return false
     },
-    async toAnotherVideo (title) {
-      await this.$router.push(`/video/${title}`)
+    async toAnotherVideo (id) {
+      await this.$router.push(`/video/${id}`)
     }
   },
   async mounted () {
-    if (!this.title) {
+    if (!this.videoId) {
       await this.$router.push({ name: '404' })
     }
     this.videoUpdate = true
     this.videoList = (await api.video.findVideoAll()).data
+    const gitalk = new Gitalk({
+      clientID: 'Iv1.bb67f06a865d387a',
+      clientSecret: '1b81e3e9a9df8321335029ff74c84397a8ecef79',
+      repo: 'meclass-comment',
+      owner: 'MrThanlon',
+      admin: ['MrThanlon'],
+      id: location.toLocaleString(), // Ensure uniqueness and length less than 50
+      distractionFreeMode: false, // Facebook-like distraction free mode
+      language: 'zh-CN'
+    })
+    gitalk.render('gitalk-container')
   },
   components: {
     videoPlayer
