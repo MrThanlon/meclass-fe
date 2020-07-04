@@ -83,7 +83,8 @@ export default {
       }
     },
     title () {
-      return this.videoList.reduce((pre, cur) => pre || cur.videoId + '' === this.videoId ? cur.videoTitle : pre, null)
+      const video = this.videoList.find(v => v.videoId + '' === this.videoId)
+      return video ? video.videoTitle : ''
     }
   },
   methods: {
@@ -100,6 +101,7 @@ export default {
     }
     this.videoUpdate = true
     this.videoList = (await api.video.findVideoAll()).data
+    console.debug(JSON.stringify(this.videoList))
     const gitalk = new Gitalk({
       clientID: '202160413cdce481616c',
       clientSecret: 'e130aae731e921136ab262dad1f90fe13a2dfa46',

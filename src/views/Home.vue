@@ -109,8 +109,8 @@
       <div class="d-flex flex-wrap">
         <div class="card rounded-0 m-1"
              style="max-width: 150px;border-color: #f1da32;cursor: pointer"
-             v-for="(item, idx) in videoList"
-             :key="idx"
+             v-for="item in videoList"
+             :key="item.videoId"
              @click="$router.push(`/video/${item.videoId}`)">
           <img class="card-img-top rounded-0 p-1"
                src="../assets/logo.jpg">
