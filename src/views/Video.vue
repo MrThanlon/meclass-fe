@@ -101,8 +101,8 @@ export default {
     this.videoUpdate = true
     this.videoList = (await api.video.findVideoAll()).data
     const gitalk = new Gitalk({
-      clientID: 'Iv1.bb67f06a865d387a',
-      clientSecret: '1b81e3e9a9df8321335029ff74c84397a8ecef79',
+      clientID: '202160413cdce481616c',
+      clientSecret: 'e130aae731e921136ab262dad1f90fe13a2dfa46',
       repo: 'meclass-comment',
       owner: 'MrThanlon',
       admin: ['MrThanlon'],
