@@ -5,10 +5,11 @@
 </template>
 
 <script>
-import comment from '../components/comment'
+// import comment from '../components/comment'
 // import videojs from 'video.js'
 // require('videojs-flash')
 
+import Comment from '../components/comment'
 export default {
   name: 'Test',
   data () {
@@ -20,7 +21,8 @@ export default {
   methods: {
   },
   components: {
-    comment
+    Comment
+    // comment
   }
 }
 </script>

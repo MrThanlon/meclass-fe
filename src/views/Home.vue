@@ -109,7 +109,7 @@
       <div class="d-flex flex-wrap">
         <div class="card rounded-0 m-1"
              style="max-width: 150px;border-color: #f1da32;cursor: pointer"
-             v-for="item in videoList"
+             v-for="item in videoList.sort((a, b)=>a.videoTitle<b.videoTitle?-1:1)"
              :key="item.videoId"
              @click="$router.push(`/video/${item.videoId}`)">
           <img class="card-img-top rounded-0 p-1"

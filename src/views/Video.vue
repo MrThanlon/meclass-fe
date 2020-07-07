@@ -2,7 +2,8 @@
   <div class="d-flex pt-0 pt-md-3 flex-wrap p-0 p-md-2">
     <div class="d-flex flex-wrap w-100 mb-3">
       <div class="d-flex justify-content-center col-12 col-md-8 p-0 mb-2">
-        <video-player :options="options"
+        <video-player v-if="videoUpdated"
+                      :options="options"
                       class="player">
         </video-player>
       </div>
@@ -30,7 +31,7 @@
                style="overflow-y: scroll; height: 300px">
             <div class="card rounded-0 m-1"
                  style="max-width: 150px;border-color: #f1da32;cursor: pointer"
-                 v-for="(item, idx) in videoList"
+                 v-for="(item, idx) in videoList.sort((a, b)=>a.videoTitle<b.videoTitle?-1:1)"
                  :key="idx"
                  @click="toAnotherVideo(item.videoId)">
               <img class="card-img-top rounded-0 p-1"
@@ -62,6 +63,7 @@ export default {
   },
   data () {
     return {
+      videoUpdated: false
     }
   },
   beforeRouteUpdate (to, from, next) {
@@ -70,8 +72,14 @@ export default {
   },
   computed: {
     ...mapState('video', ['videoList']),
+    videoInfo () {
+      return this.videoList.find(v => v.videoId + '' === this.videoId)
+    },
     options () {
-      return {
+      if (!this.videoInfo) {
+        return {}
+      }
+      return this.videoInfo.isFlash ? {
         autoplay: true,
         controls: true,
         sources: [
@@ -80,11 +88,16 @@ export default {
             type: 'video/mp4'
           }
         ]
+      } : {
+        autoplay: true,
+        techOrder: ['flash', 'html5'],
+        flash: {
+          swf: `/meclass-0.0.1-SNAPSHOT/video/get?videoId=${this.videoId}`
+        }
       }
     },
     title () {
-      const video = this.videoList.find(v => v.videoId + '' === this.videoId)
-      return video ? video.videoTitle : ''
+      return this.videoInfo ? this.videoInfo.videoTitle : ''
     }
   },
   methods: {
@@ -97,11 +110,22 @@ export default {
     ...mapActions('video', ['updateVideoList'])
   },
   async mounted () {
+    await this.updateVideoList()
     if (!this.videoId) {
       await this.$router.push({ name: '404' })
+      return
     }
-    this.videoUpdate = true
-    await this.updateVideoList()
+    if (this.videoList.find(v => v.videoId + '' === this.videoId) === undefined) {
+      await this.$router.push({ name: '404' })
+      return
+    }
+    if (this.videoInfo.isFlash === 0) {
+      setTimeout(() => {
+        this.videoUpdated = true
+      }, 1000)
+    } else {
+      this.videoUpdated = true
+    }
     const gitalk = new Gitalk({
       clientID: '202160413cdce481616c',
       clientSecret: 'e130aae731e921136ab262dad1f90fe13a2dfa46',

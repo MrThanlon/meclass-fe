@@ -4,6 +4,7 @@
 
 <script>
 import videojs from 'video.js'
+require('videojs-flash')
 export default {
   name: 'videoPlayer',
   props: {
@@ -20,8 +21,8 @@ export default {
     }
   },
   mounted () {
-    this.player = videojs(this.$refs.videoPlayer, this.options, function onPlayerReady () {
-      console.log('onPlayerReady', this)
+    this.player = videojs(this.$refs.videoPlayer, this.options, () => {
+      console.debug('onPlayerReady', this.options, this.player)
     })
   },
   beforeDestroy () {

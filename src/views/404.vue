@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-content-center mt-5">
-    <p>页面未找到，点<span @click="$router.push('/')" class="pointer">这里</span>返回首页。</p>
+    <p>页面未找到，点<router-link to="/">这里</router-link>返回首页。</p>
   </div>
 </template>
 
