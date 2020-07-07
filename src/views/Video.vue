@@ -51,9 +51,9 @@
 </template>
 
 <script>
-import api from '../utils/api'
 import videoPlayer from '../components/videoPlayer'
 import Gitalk from 'gitalk'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Video',
@@ -62,7 +62,6 @@ export default {
   },
   data () {
     return {
-      videoList: []
     }
   },
   beforeRouteUpdate (to, from, next) {
@@ -70,6 +69,7 @@ export default {
     location.reload()
   },
   computed: {
+    ...mapState('video', ['videoList']),
     options () {
       return {
         autoplay: true,
@@ -93,14 +93,15 @@ export default {
     },
     async toAnotherVideo (id) {
       await this.$router.push(`/video/${id}`)
-    }
+    },
+    ...mapActions('video', ['updateVideoList'])
   },
   async mounted () {
     if (!this.videoId) {
       await this.$router.push({ name: '404' })
     }
     this.videoUpdate = true
-    this.videoList = (await api.video.findVideoAll()).data
+    await this.updateVideoList()
     const gitalk = new Gitalk({
       clientID: '202160413cdce481616c',
       clientSecret: 'e130aae731e921136ab262dad1f90fe13a2dfa46',

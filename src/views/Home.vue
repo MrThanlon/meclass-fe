@@ -127,25 +127,25 @@
 </template>
 
 <script>
-import api from '../utils/api'
+import { mapState, mapActions } from 'vuex'
 // 首页
 export default {
   name: 'Home',
   data () {
     return {
-      logged: false,
-      username: '',
-      videoList: []
     }
   },
+  computed: {
+    ...mapState('user', ['logged', 'username']),
+    ...mapState('video', ['videoList'])
+  },
+  methods: {
+    ...mapActions('user', ['updateUserInfo']),
+    ...mapActions('video', ['updateVideoList'])
+  },
   async mounted () {
-    try {
-      this.videoList = (await api.video.findVideoAll()).data
-      this.username = (await api.user.get()).data.uname
-      this.logged = true
-    } catch (e) {
-      console.debug(e)
-    }
+    await this.updateUserInfo()
+    await this.updateVideoList()
   }
 }
 </script>

@@ -20,6 +20,7 @@
 
 <script>
 import api from '../utils/api'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'cardUpload',
@@ -30,6 +31,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('video', ['updateVideoList']),
     chooseFile () {
       this.$refs.inFile.click()
     },
@@ -48,7 +50,9 @@ export default {
           this.progress = e.loaded / e.total * 100
         })
         this.$emit('alert', { type: 'success', text: '视频上传成功' })
+        await this.updateVideoList(true)
       } catch (e) {
+        this.$emit('alert', '视频上传失败')
         console.debug(e)
       }
     }
@@ -57,5 +61,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

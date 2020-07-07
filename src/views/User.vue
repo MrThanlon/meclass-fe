@@ -73,33 +73,34 @@
 </template>
 
 <script>
-import api from '../utils/api'
 import cardUpload from '../components/cardUpload'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'User',
   data () {
     return {
-      username: '',
       oPassword: '',
       nPassword: '',
-      rPassword: '',
-      flag: 0
+      rPassword: ''
     }
   },
+  computed: {
+    ...mapState('user', ['logged', 'flag', 'username'])
+  },
   methods: {
+    ...mapActions('user', ['updateUserInfo']),
     async changePassword () {
       return false
     },
     async logout () {
       document.cookie = ''
+      this.logged = false
       await this.$router.push('/login')
     }
   },
   async mounted () {
-    const res = await api.user.get()
-    this.username = res.data.uname
-    this.flag = res.data.flag
+    await this.updateUserInfo()
   },
   components: {
     cardUpload
