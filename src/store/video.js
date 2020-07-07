@@ -19,7 +19,9 @@ export default {
       }
       try {
         const res = await api.video.findVideoAll()
-        context.commit('update', { videoList: res.data })
+        context.commit('update', {
+          videoList: res.data.sort((a, b) => a.videoTitle < b.videoTitle ? -1 : 1)
+        })
       } catch (e) {
         console.debug(e)
       }

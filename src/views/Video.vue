@@ -31,7 +31,7 @@
                style="overflow-y: scroll; height: 300px">
             <div class="card rounded-0 m-1"
                  style="max-width: 150px;border-color: #f1da32;cursor: pointer"
-                 v-for="(item, idx) in videoList.sort((a, b)=>a.videoTitle<b.videoTitle?-1:1)"
+                 v-for="(item, idx) in videoList"
                  :key="idx"
                  @click="toAnotherVideo(item.videoId)">
               <img class="card-img-top rounded-0 p-1"
