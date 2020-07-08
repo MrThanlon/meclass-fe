@@ -73,7 +73,7 @@
         </ul>
       </aside>
       <aside class="col-5 d-flex justify-content-center align-items-center border m-1">
-        广告位
+        <img style="width:80%; height:80%;" src="../assets/ad.png" alt="广告位">
       </aside>
       <aside class="col-3 m-1 border d-flex flex-wrap align-items-center justify-content-center"
              style="background: #c9c9c9">
