@@ -47,13 +47,19 @@
         </div>
       </div>
     </div>
+    <!--
     <div id="gitalk-container" class="w-100 pl-1 pr-1 pl-md-4 pr-md-4"></div>
+    -->
+    <comment :video-id="parseInt(videoId)"
+             class="col-12 mb-2"
+             @alert="$emit('alert', $event)"></comment>
   </div>
 </template>
 
 <script>
 import videoPlayer from '../components/videoPlayer'
-import Gitalk from 'gitalk'
+// import Gitalk from 'gitalk'
+import comment from '../components/comment'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -126,6 +132,7 @@ export default {
     } else {
       this.videoUpdated = true
     }
+    /*
     const gitalk = new Gitalk({
       clientID: '202160413cdce481616c',
       clientSecret: 'e130aae731e921136ab262dad1f90fe13a2dfa46',
@@ -137,9 +144,10 @@ export default {
       language: 'zh-CN'
     })
     gitalk.render('gitalk-container')
+     */
   },
   components: {
-    videoPlayer
+    videoPlayer, comment
   }
 }
 </script>

@@ -58,7 +58,7 @@
         </form>
       </div>
     </div>
-    <card-upload v-if="flag" class="m-1"></card-upload>
+    <card-upload v-if="flag" class="m-1" @alert="$emit('alert', $event)"></card-upload>
     <div class="d-flex w-100 justify-content-center">
       <button class="btn btn-outline-success m-1" @click="$router.push('/')">
         <i class="fas fa-arrow-left m-1"></i>

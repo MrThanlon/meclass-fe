@@ -49,10 +49,10 @@ export default {
           // console.debug(e)
           this.progress = e.loaded / e.total * 100
         })
-        this.$emit('alert', { type: 'success', text: '视频上传成功' })
+        this.$emit('alert', { type: 'success', text: '视频上传成功。' })
         await this.updateVideoList(true)
       } catch (e) {
-        this.$emit('alert', '视频上传失败')
+        this.$emit('alert', '视频上传失败。')
         console.debug(e)
       }
     }
